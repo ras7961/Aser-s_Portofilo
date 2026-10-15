@@ -1,4 +1,6 @@
-# Gugo Portfolio
+# Aser's Portfolio
+
+![alt text](image.png)
 
 A one-page personal portfolio with a hand-drawn ink animation: a developer at his desk, standing on a map of Africa with Ethiopia highlighted, who turns around to say hi.
 

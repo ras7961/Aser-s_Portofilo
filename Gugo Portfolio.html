@@ -1,0 +1,2300 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font:
+          14px -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #fff;
+        color: #000;
+      }
+      img {
+        max-width: 100%;
+      }
+      [hidden]:not([hidden="until-found" i]) {
+        display: none !important;
+      }
+    </style>
+    <link rel="icon" type="image/x-icon" href="ras.ico" />
+    <title>Aser's Portfolio</title>
+  </head>
+  <body>
+    <meta name="claude:viewport-fit-sides" content="cover" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Kalam:opsz,wght@12..96,500;12..96,700;12..96,800&family=Schibsted+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Kalam:wght@600;700&display=swap"
+    />
+    <style>
+      /* Layout: fixed 3D wireframe scene behind a single scrolling column.
+   Hero text left, object right. Projects in a tilt-on-hover card grid. */
+      .track {
+        animation: none;
+        width: auto;
+      }
+      .track .set {
+        flex-wrap: wrap;
+      }
+      .track .set:nth-child(2) {
+        display: none;
+      }
+      :root {
+        --bg: #ffffff;
+        --surface: #f4f4f4;
+        --surface-line: #d4d4d4;
+        --fg: #0a0a0a;
+        --muted: #555555;
+        --accent: #0a0a0a;
+        --accent-2: #555555;
+        --highlight: #0a0a0a;
+        --on-accent: #ffffff;
+        --glass: rgba(255, 255, 255, 0.94);
+        --font-display: "Kalam", "Segoe Print", "Comic Sans MS", cursive;
+        --font-body:
+          "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+        --font-hand: "Caveat", "Segoe Print", cursive;
+        --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #0a0a0a;
+          --surface: #141414;
+          --surface-line: #2e2e2e;
+          --fg: #f5f5f5;
+          --muted: #a3a3a3;
+          --accent: #f5f5f5;
+          --accent-2: #a3a3a3;
+          --highlight: #f5f5f5;
+          --on-accent: #0a0a0a;
+          --glass: rgba(10, 10, 10, 0.92);
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #0a0a0a;
+        --surface: #141414;
+        --surface-line: #2e2e2e;
+        --fg: #f5f5f5;
+        --muted: #a3a3a3;
+        --accent: #f5f5f5;
+        --accent-2: #a3a3a3;
+        --highlight: #f5f5f5;
+        --on-accent: #0a0a0a;
+        --glass: rgba(10, 10, 10, 0.92);
+        color-scheme: dark;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font: 400 17px/1.6 var(--font-body);
+        padding-block: 0;
+        padding-left: max(16px, env(safe-area-inset-left, 0px));
+        padding-right: max(16px, env(safe-area-inset-right, 0px));
+        overflow-x: hidden;
+      }
+      #scene {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+        display: block;
+      }
+      .wrap {
+        position: relative;
+        z-index: 1;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+      a {
+        color: inherit;
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      /* nav */
+      .nav {
+        position: sticky;
+        top: env(safe-area-inset-top, 0px);
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 0;
+      }
+      .brand {
+        font: 800 20px/1 var(--font-display);
+        letter-spacing: -0.02em;
+        text-decoration: none;
+      }
+      .brand span {
+        color: var(--accent);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+      .nav-links a,
+      .toggle {
+        font: 500 13px/1 var(--font-mono);
+        text-decoration: none;
+        color: var(--muted);
+        padding: 9px 12px;
+        border-radius: 999px;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        transition:
+          color 0.2s,
+          background 0.2s;
+      }
+      .nav-links a:hover,
+      .toggle:hover {
+        color: var(--fg);
+        background: var(--glass);
+      }
+      .toggle {
+        border: 1px solid var(--surface-line);
+      }
+
+      /* hero */
+      .hero {
+        padding-block: clamp(56px, 12vh, 140px) clamp(56px, 10vh, 120px);
+        min-height: min(86vh, 780px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .eyebrow {
+        font: 500 13px/1 var(--font-mono);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+        margin: 0 0 22px;
+      }
+      h1 {
+        font: 800 clamp(40px, 7.4vw, 92px)/0.98 var(--font-display);
+        letter-spacing: -0.035em;
+        margin: 0 0 26px;
+        max-width: 12ch;
+        text-wrap: balance;
+      }
+      h1 em {
+        font-style: normal;
+        color: var(--accent);
+      }
+      .lede {
+        max-width: 46ch;
+        font-size: clamp(17px, 2vw, 20px);
+        color: var(--muted);
+        margin: 0 0 34px;
+      }
+      .cta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        font: 600 15px/1 var(--font-body);
+        text-decoration: none;
+        padding: 15px 22px;
+        border-radius: 10px;
+        background: var(--accent);
+        color: var(--on-accent);
+        transition: transform 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      .btn.ghost {
+        background: var(--glass);
+        color: var(--fg);
+        border: 1px solid var(--surface-line);
+      }
+      .hint {
+        margin-top: 44px;
+        font: 400 12px/1 var(--font-mono);
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      /* sections */
+      section {
+        padding-block: clamp(48px, 8vw, 96px);
+      }
+      h2 {
+        font: 700 clamp(28px, 4vw, 44px)/1.05 var(--font-display);
+        letter-spacing: -0.025em;
+        margin: 0 0 10px;
+        text-wrap: balance;
+      }
+      .sub {
+        color: var(--muted);
+        max-width: 52ch;
+        margin: 0 0 40px;
+      }
+
+      /* projects */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+        gap: 18px;
+        perspective: 1100px;
+      }
+      .card {
+        position: relative;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 24px;
+        border-radius: 14px;
+        background: var(--glass);
+        border: 1px solid var(--surface-line);
+        transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+          translateZ(0);
+        transform-style: preserve-3d;
+        transition:
+          transform 0.25s ease-out,
+          border-color 0.25s;
+        will-change: transform;
+      }
+      .card:hover {
+        border-color: var(--accent);
+      }
+      .card .kind {
+        font: 500 12px/1 var(--font-mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+      }
+      .card h3 {
+        font: 700 22px/1.15 var(--font-display);
+        letter-spacing: -0.02em;
+        margin: 0;
+        transform: translateZ(30px);
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15.5px;
+        flex: 1;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 0;
+        margin: 4px 0 0;
+        list-style: none;
+      }
+      .tags li {
+        font: 400 12px/1 var(--font-mono);
+        padding: 6px 9px;
+        border-radius: 6px;
+        background: var(--surface);
+        border: 1px solid var(--surface-line);
+      }
+      .card a.go {
+        font: 600 14px/1 var(--font-body);
+        color: var(--accent);
+        text-decoration: none;
+        margin-top: 4px;
+      }
+      .card a.go:hover {
+        text-decoration: underline;
+      }
+
+      /* about / skills */
+      .about {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: clamp(24px, 5vw, 64px);
+      }
+      .about p {
+        margin: 0 0 16px;
+        max-width: 56ch;
+      }
+      .skills {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .skills h3 {
+        font: 500 12px/1 var(--font-mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 10px;
+      }
+      .panel {
+        padding: 24px;
+        border-radius: 14px;
+        background: var(--glass);
+        border: 1px solid var(--surface-line);
+        min-width: 0;
+      }
+
+      /* contact */
+      .contact-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .contact-links .copy {
+        font: 500 14px/1 var(--font-mono);
+      }
+      .contact {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+        gap: clamp(24px, 5vw, 64px);
+        align-items: start;
+      }
+      .msg {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .msg label {
+        font: 500 12px/1 var(--font-mono);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+      .msg input,
+      .msg textarea {
+        width: 100%;
+        font: 400 16px/1.5 var(--font-body);
+        color: var(--fg);
+        background: var(--surface);
+        border: 1px solid var(--surface-line);
+        border-radius: 10px;
+        padding: 12px 14px;
+        resize: vertical;
+      }
+      .msg input:focus,
+      .msg textarea:focus {
+        border-color: var(--accent);
+        outline: none;
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+      }
+      .msg-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .msg-actions .btn {
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+      .msg-actions .btn.ghost {
+        border-color: var(--surface-line);
+      }
+      .msg-actions [aria-disabled="true"] {
+        opacity: 0.45;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+      .note {
+        margin: 6px 0 0;
+        font-size: 13.5px;
+        color: var(--muted);
+      }
+      footer {
+        padding-block: 40px calc(40px + env(safe-area-inset-bottom, 0px));
+        color: var(--muted);
+        font: 400 13px/1.4 var(--font-mono);
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      /* motion graphics */
+      .progress {
+        position: fixed;
+        top: env(safe-area-inset-top, 0px);
+        left: 0;
+        right: 0;
+        height: 3px;
+        z-index: 20;
+        transform-origin: 0 50%;
+        transform: scaleX(0);
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        will-change: transform;
+      }
+      .marquee {
+        overflow: hidden;
+        margin-block: 8px;
+        padding-block: 16px;
+        border-block: 1px solid var(--surface-line);
+        background: var(--glass);
+        -webkit-mask-image: linear-gradient(
+          90deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+        mask-image: linear-gradient(
+          90deg,
+          transparent,
+          #000 8%,
+          #000 92%,
+          transparent
+        );
+      }
+      .track {
+        display: flex;
+        width: max-content;
+        animation: slide 38s linear infinite;
+        will-change: transform;
+      }
+      .set {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        padding-right: 36px;
+      }
+      .set span {
+        font: 700 26px/1 var(--font-display);
+        letter-spacing: -0.01em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        color: var(--fg);
+      }
+      .set i {
+        width: 9px;
+        height: 9px;
+        background: var(--accent);
+        transform: rotate(45deg);
+        flex: none;
+      }
+      @keyframes slide {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .track {
+          animation: none;
+        }
+        .progress {
+          display: none;
+        }
+      }
+
+      /* hand-drawn details */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        pointer-events: none;
+        opacity: 0.07;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      }
+      h1 em {
+        position: relative;
+        display: inline-block;
+      }
+      h1 em::after {
+        content: "";
+        position: absolute;
+        left: -2%;
+        right: -2%;
+        bottom: -0.06em;
+        height: 0.2em;
+        background: var(--fg);
+        -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'><path d='M2 9 Q18 2 38 8 T78 6 T118 7' stroke='black' stroke-width='4' fill='none' stroke-linecap='round'/></svg>")
+          center/100% 100% no-repeat;
+        mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 14' preserveAspectRatio='none'><path d='M2 9 Q18 2 38 8 T78 6 T118 7' stroke='black' stroke-width='4' fill='none' stroke-linecap='round'/></svg>")
+          center/100% 100% no-repeat;
+        animation: draw 1s 0.7s cubic-bezier(0.6, 0, 0.2, 1) backwards;
+      }
+      @keyframes draw {
+        from {
+          clip-path: inset(0 100% 0 0);
+        }
+      }
+      .card,
+      .panel {
+        position: relative;
+        border-color: transparent;
+      }
+      .card::before,
+      .panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1.6px solid var(--fg);
+        border-radius: 14px;
+        pointer-events: none;
+        opacity: 0.85;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        h1 em::after {
+          animation: none;
+        }
+      }
+
+      /* load-in */
+      .rise {
+        animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+      }
+      .rise.d1 {
+        animation-delay: 0.08s;
+      }
+      .rise.d2 {
+        animation-delay: 0.18s;
+      }
+      .rise.d3 {
+        animation-delay: 0.3s;
+      }
+      .rise.d4 {
+        animation-delay: 0.42s;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+      }
+
+      @media (max-width: 760px) {
+        .about,
+        .contact {
+          grid-template-columns: minmax(0, 1fr);
+        }
+        .nav-links a.hide-sm {
+          display: none;
+        }
+        h1 {
+          max-width: 14ch;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .rise {
+          animation: none;
+        }
+        .card {
+          transition: none;
+          transform: none !important;
+        }
+      }
+    </style>
+
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <header class="nav">
+        <a class="brand" href="#top">Aser<span>.</span></a>
+        <nav class="nav-links" aria-label="Sections">
+          <a href="#work">Work</a>
+          <a class="hide-sm" href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <button
+            class="toggle"
+            id="themeToggle"
+            type="button"
+            aria-label="Switch light or dark theme"
+          >
+            theme
+          </button>
+        </nav>
+      </header>
+
+      <main id="top">
+        <div class="hero">
+          <p class="eyebrow rise">
+            Full-stack developer · AI agents · Blockchain developer
+          </p>
+          <h1 class="rise d1">
+            I'm Aser chala. I build <em>apps</em> and AI agents.
+          </h1>
+
+          <div class="cta rise d3">
+            <a class="btn" href="#work">See my projects</a>
+            <a class="btn ghost" href="#contact">Get in touch</a>
+          </div>
+          <div class="hint rise d4">
+            Move your mouse · wait, he turns around to say hi
+          </div>
+        </div>
+
+        <div class="" aria-hidden="true">
+          <div class="track" id="track"></div>
+        </div>
+
+        <section id="work">
+          <h2>Selected work</h2>
+          <p class="sub">
+            Things I've built for clients, my internship, and my own learning.
+          </p>
+          <div class="grid" id="projects"></div>
+        </section>
+
+        <section id="skills-section">
+          <h2>Skills</h2>
+          <p class="sub">The tools I use most.</p>
+          <div class="grid" id="skillCards"></div>
+        </section>
+
+        <section id="about">
+          <div class="about">
+            <div>
+              <h2>About</h2>
+              <p>
+                I finished a Bachelor's degree in Software Engineering and I
+                spend my time between full-stack web work and AI agent projects.
+                I like backends that are simple to reason about and interfaces
+                that stay out of the way.
+              </p>
+              <p>
+                I'm also exploring Artificial Intelligence, AI agents, Large
+                Language Models (LLMs), and Retrieval-Augmented Generation (RAG)
+                to build smarter applications that solve real-world problems. I
+                enjoy learning new technologies, solving challenging problems,
+                and continuously improving my development skills. My goal is to
+                build impactful software that combines clean design, efficient
+                engineering, and intelligent automation to create meaningful
+                value for users and businesses.
+              </p>
+              <p>
+                I speak more than one language, and some of my projects work in
+                English.
+              </p>
+            </div>
+            <div class="panel skills" id="skills"></div>
+          </div>
+        </section>
+
+        <section id="contact">
+          <div class="contact">
+            <div>
+              <h2>Let's work together</h2>
+              <p class="sub">Write me a message and it goes to my inbox.</p>
+              <div class="contact-links" id="contactLinks"></div>
+            </div>
+            <form class="panel msg" id="msgForm" novalidate>
+              <label for="mName">Your name</label>
+              <input
+                id="mName"
+                name="name"
+                type="text"
+                autocomplete="name"
+                placeholder="Your name"
+              />
+              <label for="mFrom">Your email</label>
+              <input
+                id="mFrom"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="So I can reply"
+              />
+              <label for="mText">Message</label>
+              <textarea
+                id="mText"
+                name="message"
+                rows="5"
+                placeholder="Tell me about the role or project"
+              ></textarea>
+              <div class="msg-actions">
+                <a
+                  class="btn"
+                  id="sendGmail"
+                  href="#contact"
+                  target="_blank"
+                  rel="noopener"
+                  aria-disabled="true"
+                  >Send with Gmail</a
+                >
+                <a
+                  class="btn ghost"
+                  id="sendMail"
+                  href="#contact"
+                  aria-disabled="true"
+                  >Open mail app</a
+                >
+                <button class="btn ghost" id="copyMsg" type="button">
+                  Copy message
+                </button>
+              </div>
+              <p class="note" id="msgNote">
+                Your message opens in your email, ready to send. Nothing is sent
+                until you press send there.
+              </p>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>©Ras_394 <span id="year"></span> </span>
+        <span>Drawn by hand in ink</span>
+      </footer>
+    </div>
+
+    <script>
+      /* ============================================================
+   EDIT HERE. Everything on the page comes from these lists.
+   ------------------------------------------------------------
+   Add a project: copy one block inside PROJECTS, paste it at the
+   top, change the text. Add a "link" to show a "View project" link.
+   ============================================================ */
+      document.documentElement.setAttribute("data-theme", "light");
+
+      const PROJECTS = [
+        {
+          title: "AI Customer Support Agent",
+          kind: "AI agent",
+          desc: "A LangChain support agent that reads customer emails over IMAP, drafts answers, and replies over SMTP.",
+          stack: ["Python", "LangChain", "IMAP / SMTP", "uv"],
+          link: "",
+        },
+        {
+          title: "Multi-Agent Triage System",
+          kind: "AI agents",
+          desc: "A locally run customer support system where several agents sort and route requests. It includes Amharic text-to-speech.",
+          stack: ["Python", "LangGraph", "Transformers", "VITS / MMS"],
+          link: "",
+        },
+        {
+          title: "Transport Ticketing Platform",
+          kind: "Full-stack · Mobile",
+          desc: "A payment and dispatch platform for taxi associations with an admin web app, driver and passenger mobile apps, and a Spring Boot API.",
+          stack: ["Next.js", "Flutter", "Spring Boot"],
+          link: "",
+        },
+        {
+          title: "Staff ID System",
+          kind: "Backend · Web",
+          desc: "A Node.js and MongoDB backend for EvaSUE Ethiopia staff records, with a Next.js portal where staff log in, view their ID, and download it as a PDF.",
+          stack: ["Node.js", "MongoDB", "Next.js"],
+          link: "",
+        },
+        {
+          title: "DMC Real Estate",
+          kind: "Full-stack",
+          desc: "A real estate marketplace with a React client and an Express and MongoDB server.",
+          stack: ["React", "Express", "MongoDB"],
+          link: "",
+        },
+        {
+          title: "Web Research Agent",
+          kind: "AI agent",
+          desc: "A tool-calling agent loop that searches the web and reads pages to answer research questions.",
+          stack: ["Python", "Tool calling", "web_search", "read_page"],
+          link: "",
+        },
+        {
+          title: "Daily Planner",
+          kind: "Android",
+          desc: "A commitment tracker with alarms, notifications, completion tracking, and one to two months of progress analytics.",
+          stack: ["Android", "Notifications", "Analytics"],
+          link: "",
+        },
+      ];
+
+      const SKILLS = {
+        Languages: [
+          "Python",
+          "TypeScript",
+          "JavaScript",
+          "Java",
+          "Dart",
+          "solidity",
+        ],
+        "Web & mobile": ["React", "Next.js", "Flutter", "Android"],
+        "Backend & data": ["Node.js", "Express", "Spring Boot", "MongoDB"],
+        AI: ["LangChain", "LangGraph", "Tool-calling agents", "Local models"],
+        Blockchain: ["Solidity", "Smart contracts", "Web3.js", "Ethers.js"],
+      };
+
+      /* Fill in any you want visible. Empty ones are hidden. */
+      const CONTACT = {
+        email: "asherchala123@gmail.com", // messages from the form go here
+        github: "https://github.com/ras7961", // e.g. "https://github.com/yourname"
+        linkedin: "https://www.linkedin.com/in/aser-chala-154999280", // e.g. "https://www.linkedin.com/in/yourname"
+      };
+      /* ============================================================ */
+
+      function el(tag, cls, text) {
+        const n = document.createElement(tag);
+        if (cls) n.className = cls;
+        if (text) n.textContent = text;
+        return n;
+      }
+
+      /* projects */
+      const grid = document.getElementById("projects");
+      PROJECTS.forEach((p) => {
+        const c = el("article", "card");
+        c.appendChild(el("span", "kind", p.kind));
+        c.appendChild(el("h3", "", p.title));
+        c.appendChild(el("p", "", p.desc));
+        const tags = el("ul", "tags");
+        p.stack.forEach((t) => tags.appendChild(el("li", "", t)));
+        c.appendChild(tags);
+        if (p.link) {
+          const a = el("a", "go", "View project →");
+          a.href = p.link;
+          a.target = "_blank";
+          a.rel = "noopener";
+          c.appendChild(a);
+        }
+        c.addEventListener("pointermove", (e) => {
+          if (e.pointerType === "touch") return;
+          const r = c.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5;
+          const y = (e.clientY - r.top) / r.height - 0.5;
+          c.style.setProperty("--ry", (x * 10).toFixed(2) + "deg");
+          c.style.setProperty("--rx", (-y * 10).toFixed(2) + "deg");
+        });
+        c.addEventListener("pointerleave", () => {
+          c.style.setProperty("--rx", "0deg");
+          c.style.setProperty("--ry", "0deg");
+        });
+        grid.appendChild(c);
+      });
+
+      /* skills */
+      const skillsBox = document.getElementById("skills");
+      Object.keys(SKILLS).forEach((group) => {
+        const d = el("div");
+        d.appendChild(el("h2", "", group));
+        const ul = el("ul", "tags");
+        SKILLS[group].forEach((s) => ul.appendChild(el("li", "", s)));
+        d.appendChild(ul);
+        skillsBox.appendChild(d);
+      });
+
+      /* skill cards: same look as the project cards */
+      const skillGrid = document.getElementById("skillCards");
+      Object.keys(SKILLS).forEach((group) => {
+        const c = el("article", "card");
+        c.appendChild(el("span", "kind", "Skills"));
+        c.appendChild(el("h3", "", group));
+        const tags = el("ul", "tags");
+        SKILLS[group].forEach((s) => tags.appendChild(el("li", "", s)));
+        c.appendChild(tags);
+        c.addEventListener("pointermove", (e) => {
+          if (e.pointerType === "touch") return;
+          const r = c.getBoundingClientRect();
+          c.style.setProperty(
+            "--ry",
+            (((e.clientX - r.left) / r.width - 0.5) * 10).toFixed(2) + "deg",
+          );
+          c.style.setProperty(
+            "--rx",
+            (-((e.clientY - r.top) / r.height - 0.5) * 10).toFixed(2) + "deg",
+          );
+        });
+        c.addEventListener("pointerleave", () => {
+          c.style.setProperty("--rx", "0deg");
+          c.style.setProperty("--ry", "0deg");
+        });
+        skillGrid.appendChild(c);
+      });
+
+      /* contact */
+      const cl = document.getElementById("contactLinks");
+      const msgForm = document.getElementById("msgForm");
+      function copyText(text, onDone, fallbackEl) {
+        const fail = () => {
+          if (fallbackEl) {
+            fallbackEl.focus();
+            fallbackEl.select();
+          }
+        };
+        try {
+          navigator.clipboard.writeText(text).then(onDone, fail);
+        } catch (e) {
+          fail();
+        }
+      }
+      if (CONTACT.email) {
+        const b = el("button", "btn copy", CONTACT.email);
+        b.type = "button";
+        b.title = "Copy email address";
+        b.addEventListener("click", () => {
+          copyText(CONTACT.email, () => {
+            b.textContent = "Copied";
+            setTimeout(() => (b.textContent = CONTACT.email), 1400);
+          });
+        });
+        cl.appendChild(b);
+      }
+      [
+        ["github", "GitHub"],
+        ["linkedin", "LinkedIn"],
+      ].forEach(([k, label]) => {
+        if (!CONTACT[k]) return;
+        const a = el("a", "btn ghost", label);
+        a.href = CONTACT[k];
+        a.target = "_blank";
+        a.rel = "noopener";
+        cl.appendChild(a);
+      });
+      if (!cl.children.length)
+        cl.appendChild(el("p", "sub", "Contact links are on the way."));
+
+      /* message form: builds a ready-to-send email to CONTACT.email */
+      if (!CONTACT.email) msgForm.hidden = true;
+      const fName = document.getElementById("mName"),
+        fFrom = document.getElementById("mFrom"),
+        fText = document.getElementById("mText");
+      const gmailBtn = document.getElementById("sendGmail"),
+        mailBtn = document.getElementById("sendMail"),
+        copyBtn = document.getElementById("copyMsg");
+      function draft() {
+        const name = fName.value.trim(),
+          from = fFrom.value.trim(),
+          text = fText.value.trim();
+        const subject = "Portfolio message from " + (name || "a visitor");
+        const body =
+          text +
+          "\n\n" +
+          (name || "") +
+          (from ? (name ? " · " : "") + from : "");
+        return { subject, body: body.trim(), ready: text.length > 0 };
+      }
+      function refresh() {
+        const d = draft(),
+          q = encodeURIComponent;
+        gmailBtn.href =
+          "https://mail.google.com/mail/?view=cm&fs=1&to=" +
+          q(CONTACT.email) +
+          "&su=" +
+          q(d.subject) +
+          "&body=" +
+          q(d.body);
+        mailBtn.href =
+          "mailto:" +
+          CONTACT.email +
+          "?subject=" +
+          q(d.subject) +
+          "&body=" +
+          q(d.body);
+        [gmailBtn, mailBtn].forEach((a) =>
+          a.setAttribute("aria-disabled", d.ready ? "false" : "true"),
+        );
+      }
+      [fName, fFrom, fText].forEach((f) =>
+        f.addEventListener("input", refresh),
+      );
+      msgForm.addEventListener("submit", (e) => e.preventDefault());
+      [gmailBtn, mailBtn].forEach((a) =>
+        a.addEventListener("click", (e) => {
+          if (a.getAttribute("aria-disabled") === "true") e.preventDefault();
+        }),
+      );
+      copyBtn.addEventListener("click", () => {
+        const d = draft();
+        if (!d.ready) {
+          fText.focus();
+          return;
+        }
+        copyText(
+          d.subject + "\n\n" + d.body,
+          () => {
+            copyBtn.textContent = "Copied";
+            setTimeout(() => (copyBtn.textContent = "Copy message"), 1400);
+          },
+          fText,
+        );
+      });
+      refresh();
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      /* theme toggle */
+      const root = document.documentElement;
+      document.getElementById("themeToggle").addEventListener("click", () => {
+        const dark = getComputedStyle(root).colorScheme.indexOf("dark") !== -1;
+        root.setAttribute("data-theme", dark ? "light" : "dark");
+        applyColors();
+      });
+
+      /* scroll progress bar */
+      (function () {
+        const bar = document.getElementById("progress");
+        function update() {
+          const max =
+            document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.transform =
+            "scaleX(" + (max > 0 ? Math.min(1, window.scrollY / max) : 0) + ")";
+        }
+        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update);
+        update();
+      })();
+
+      /* ---------- hand-drawn scene: Gugo at his desk on the map of Africa ---------- */
+      const reduce = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      let applyColors = function () {};
+      (function scene() {
+        const canvas = document.getElementById("scene");
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        const THEMES = {
+          light: {
+            ink: "#0b0b0b",
+            paper: "#ffffff",
+            skin: "#3d3d3d",
+            hi: "rgba(255,255,255,.6)",
+            hair: "#050505",
+            shirt: "#ffffff",
+            pants: "#c4c4c4",
+            shoe: "#111111",
+            chair: "#6a6a6a",
+            wood: "#efefef",
+            body: "#2c2c2c",
+            screen: "#ffffff",
+            code: "#0b0b0b",
+            key: "#d2d2d2",
+          },
+          dark: {
+            ink: "#f4f4f4",
+            paper: "#0a0a0a",
+            skin: "#5c5c5c",
+            hi: "rgba(255,255,255,.55)",
+            hair: "#161616",
+            shirt: "#e4e4e4",
+            pants: "#2a2a2a",
+            shoe: "#1a1a1a",
+            chair: "#3a3a3a",
+            wood: "#2c2c2c",
+            body: "#171717",
+            screen: "#0a0a0a",
+            code: "#f4f4f4",
+            key: "#3a3a3a",
+          },
+        };
+        let P = THEMES.light;
+
+        const TAU = Math.PI * 2;
+        const clamp01 = (v) => Math.min(1, Math.max(0, v));
+        const lerp = (a, b, t) => a + (b - a) * t;
+        const sm = (a, b, x) => {
+          const t = clamp01((x - a) / (b - a));
+          return t * t * (3 - 2 * t);
+        };
+        const eo = (a, b, x) => {
+          const t = clamp01((x - a) / (b - a));
+          return 1 - Math.pow(1 - t, 3);
+        };
+        const backOut = (a, b, x) => {
+          const t = clamp01((x - a) / (b - a)),
+            c = 1.70158;
+          return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2);
+        };
+
+        let W = 0,
+          H = 0,
+          DPR = 1,
+          S = 1,
+          OX = 0,
+          OY = 0,
+          boil = 0,
+          sid = 0,
+          gx = 0,
+          gy = 0;
+        const hash = (n) => {
+          const v = Math.sin(n * 12.9898 + 78.233) * 43758.5453;
+          return v - Math.floor(v);
+        };
+
+        /* projection: world x right, y up, z toward viewer; camera looks down by E */
+        const E = 0.42,
+          cE = Math.cos(E),
+          sE = Math.sin(E);
+        const pr = (x, y, z) => [x, -y * cE + z * sE];
+        const dp = (v) => v[2] * cE + v[1] * sE;
+        const rotY = (v, th) => {
+          const c = Math.cos(th),
+            s = Math.sin(th);
+          return [v[0] * c + v[2] * s, v[1], -v[0] * s + v[2] * c];
+        };
+        const PJ = (v) => pr(v[0], v[1], v[2]);
+
+        /* ---------- pencil line primitives ---------- */
+        function wob(pts, closed, amp) {
+          const n = pts.length,
+            m = closed ? n : n - 1,
+            out = [];
+          for (let i = 0; i < m; i++) {
+            const a = pts[i],
+              b = pts[(i + 1) % n];
+            const dx = b[0] - a[0],
+              dy = b[1] - a[1],
+              L = Math.hypot(dx, dy) || 1;
+            const k = Math.max(1, Math.round(L / 30));
+            for (let j = 0; j < k; j++) {
+              const t = j / k;
+              const r =
+                (hash(sid * 17.3 + i * 3.7 + j * 1.3 + boil * 101.1) - 0.5) *
+                2 *
+                amp;
+              out.push([
+                a[0] + dx * t - (dy / L) * r,
+                a[1] + dy * t + (dx / L) * r,
+              ]);
+            }
+          }
+          if (!closed) out.push(pts[n - 1].slice());
+          sid++;
+          return out;
+        }
+        function trace(pts, closed) {
+          const n = pts.length;
+          if (n < 2) return;
+          ctx.beginPath();
+          ctx.moveTo(pts[0][0], pts[0][1]);
+          if (n === 2) ctx.lineTo(pts[1][0], pts[1][1]);
+          else {
+            for (let i = 1; i < n - 1; i++) {
+              const mx = (pts[i][0] + pts[i + 1][0]) / 2,
+                my = (pts[i][1] + pts[i + 1][1]) / 2;
+              ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
+            }
+            ctx.lineTo(pts[n - 1][0], pts[n - 1][1]);
+          }
+          if (closed) ctx.closePath();
+        }
+        function ink(pts, o) {
+          o = o || {};
+          const closed = !!(o.closed || o.fill),
+            amp = o.amp == null ? 0.7 : o.amp,
+            lw = ((o.w || 1) * 1.9) / S;
+          ctx.lineJoin = "round";
+          ctx.lineCap = "round";
+          const A = wob(pts, closed, amp);
+          if (o.fill) {
+            trace(A, true);
+            ctx.fillStyle = o.fill;
+            ctx.fill();
+          }
+          if (o.nostroke) return;
+          const al = o.a == null ? 1 : o.a;
+          ctx.strokeStyle = o.color || P.ink;
+          ctx.lineWidth = lw;
+          ctx.globalAlpha = al;
+          trace(A, closed);
+          ctx.stroke();
+          if (false) {
+            trace(wob(pts, closed, amp * 1.6), closed);
+            ctx.lineWidth = lw * 0.5;
+            ctx.globalAlpha = al * 0.5;
+            ctx.stroke();
+          }
+          ctx.globalAlpha = 1;
+        }
+        function hatch(poly, ang, gap, o) {
+          o = o || {};
+          if (poly.length < 3) return;
+          let x0 = 1e9,
+            x1 = -1e9,
+            y0 = 1e9,
+            y1 = -1e9;
+          poly.forEach((p) => {
+            x0 = Math.min(x0, p[0]);
+            x1 = Math.max(x1, p[0]);
+            y0 = Math.min(y0, p[1]);
+            y1 = Math.max(y1, p[1]);
+          });
+          const cx = (x0 + x1) / 2,
+            cy = (y0 + y1) / 2,
+            R = Math.hypot(x1 - x0, y1 - y0) / 2 + 2;
+          const ca = Math.cos(ang),
+            sa = Math.sin(ang);
+          ctx.save();
+          trace(poly, true);
+          ctx.clip();
+          ctx.strokeStyle = o.color || P.ink;
+          ctx.lineWidth = ((o.w || 0.55) * 1.9) / S;
+          ctx.globalAlpha = o.a == null ? 0.7 : o.a;
+          ctx.lineCap = "round";
+          for (let d = -R; d <= R; d += gap) {
+            const ox = cx - sa * d,
+              oy = cy + ca * d;
+            trace(
+              wob(
+                [
+                  [ox - ca * R, oy - sa * R],
+                  [ox + ca * R, oy + sa * R],
+                ],
+                false,
+                o.amp == null ? 0.45 : o.amp,
+              ),
+              false,
+            );
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+        function text(str, x, y, size, color, o) {
+          o = o || {};
+          ctx.save();
+          ctx.translate(
+            x + (hash(sid++ * 7.7 + boil * 31) - 0.5) * 0.9,
+            y + (hash(sid++ * 5.3 + boil * 17) - 0.5) * 0.9,
+          );
+          if (o.rot) ctx.rotate(o.rot);
+          if (o.scale) ctx.scale(o.scale, o.scale);
+          ctx.font =
+            (o.weight || 700) +
+            " " +
+            size +
+            "px Caveat, 'Segoe Print', 'Comic Sans MS', cursive";
+          ctx.textAlign = o.align || "center";
+          ctx.textBaseline = "middle";
+          if (o.halo) {
+            ctx.lineWidth = o.halo;
+            ctx.lineJoin = "round";
+            ctx.strokeStyle = P.paper;
+            ctx.strokeText(str, 0, 0);
+          }
+          ctx.fillStyle = color;
+          ctx.globalAlpha = o.a == null ? 1 : o.a;
+          ctx.fillText(str, 0, 0);
+          ctx.restore();
+        }
+        const circ = (cx, cy, r, n) => {
+          const a = [];
+          n = n || 18;
+          for (let i = 0; i < n; i++) {
+            const t = (i / n) * TAU;
+            a.push([cx + Math.cos(t) * r, cy + Math.sin(t) * r]);
+          }
+          return a;
+        };
+        const ellp = (cx, cy, rx, ry, n) => {
+          const a = [];
+          n = n || 12;
+          for (let i = 0; i < n; i++) {
+            const t = (i / n) * TAU;
+            a.push([cx + Math.cos(t) * rx, cy + Math.sin(t) * ry]);
+          }
+          return a;
+        };
+        const ground = (cx, cz, rx, rz, n) => {
+          const a = [];
+          n = n || 28;
+          for (let i = 0; i < n; i++) {
+            const t = (i / n) * TAU;
+            a.push(pr(cx + Math.cos(t) * rx, 0, cz + Math.sin(t) * rz));
+          }
+          return a;
+        };
+
+        /* ---------- the ground: Africa, with Ethiopia drawn dense ---------- */
+        const AFRICA = [
+          [-5.9, 35.8],
+          [-2.9, 35.2],
+          [-1.0, 35.7],
+          [0, 36.0],
+          [3.0, 36.8],
+          [8.0, 36.9],
+          [10.3, 37.2],
+          [11.0, 37.1],
+          [10.6, 35.9],
+          [10.1, 34.5],
+          [11.0, 33.5],
+          [13.0, 32.9],
+          [15.2, 32.3],
+          [15.3, 31.4],
+          [17.5, 30.5],
+          [19.5, 30.3],
+          [20.1, 32.2],
+          [21.0, 32.8],
+          [23.0, 32.6],
+          [25.0, 31.9],
+          [29.0, 30.9],
+          [32.3, 31.2],
+          [34.2, 31.3],
+          [34.9, 29.5],
+          [34.3, 27.8],
+          [32.6, 29.9],
+          [33.8, 27.2],
+          [34.5, 25.5],
+          [35.5, 23.9],
+          [36.9, 22.0],
+          [37.3, 19.5],
+          [38.5, 18.0],
+          [39.5, 15.5],
+          [41.0, 14.5],
+          [42.7, 13.0],
+          [43.2, 11.8],
+          [44.0, 10.4],
+          [47.0, 11.2],
+          [51.2, 11.8],
+          [51.0, 10.4],
+          [50.0, 8.0],
+          [48.5, 5.0],
+          [46.0, 2.0],
+          [44.0, 1.0],
+          [42.5, -0.4],
+          [41.0, -2.0],
+          [40.2, -2.8],
+          [39.5, -4.5],
+          [39.2, -6.5],
+          [39.5, -8.5],
+          [40.5, -10.5],
+          [40.6, -15.0],
+          [37.0, -17.5],
+          [34.8, -20.0],
+          [35.4, -23.8],
+          [32.9, -26.0],
+          [32.8, -28.5],
+          [31.0, -30.0],
+          [28.0, -32.7],
+          [25.6, -34.0],
+          [22.5, -34.0],
+          [20.0, -34.8],
+          [18.4, -34.2],
+          [18.0, -32.0],
+          [16.5, -28.6],
+          [15.0, -26.0],
+          [14.5, -22.5],
+          [13.0, -20.0],
+          [11.8, -17.2],
+          [12.2, -14.0],
+          [13.5, -12.0],
+          [13.0, -9.0],
+          [12.2, -6.0],
+          [9.0, -1.0],
+          [9.5, 0.5],
+          [9.3, 3.5],
+          [8.8, 4.4],
+          [7.0, 4.4],
+          [5.0, 5.5],
+          [3.4, 6.4],
+          [1.0, 6.1],
+          [-2.0, 4.8],
+          [-4.0, 5.2],
+          [-7.5, 4.4],
+          [-10.8, 6.6],
+          [-13.2, 8.5],
+          [-15.0, 10.8],
+          [-16.7, 12.3],
+          [-17.5, 14.7],
+          [-16.5, 16.5],
+          [-16.3, 19.5],
+          [-17.0, 21.0],
+          [-16.0, 23.5],
+          [-14.5, 26.0],
+          [-13.0, 28.0],
+          [-10.0, 29.8],
+          [-9.7, 31.0],
+          [-8.5, 33.5],
+          [-6.8, 34.0],
+          [-6.0, 35.5],
+        ];
+        const MADA = [
+          [49.3, -12.0],
+          [50.4, -15.0],
+          [49.5, -18.0],
+          [47.5, -24.5],
+          [45.2, -25.5],
+          [43.5, -23.5],
+          [44.3, -20.0],
+          [44.0, -17.0],
+          [46.3, -15.7],
+          [48.0, -13.5],
+        ];
+        const ETH = [
+          [36.5, 14.3],
+          [37.6, 14.9],
+          [38.5, 14.4],
+          [39.5, 14.5],
+          [40.3, 14.2],
+          [41.6, 13.5],
+          [42.4, 12.5],
+          [42.4, 11.5],
+          [43.0, 11.0],
+          [43.5, 10.0],
+          [44.2, 9.0],
+          [45.5, 8.0],
+          [47.0, 8.0],
+          [48.0, 8.0],
+          [46.8, 6.2],
+          [44.9, 4.9],
+          [43.0, 4.7],
+          [41.9, 3.95],
+          [40.0, 4.2],
+          [39.2, 3.4],
+          [38.0, 3.6],
+          [36.0, 4.5],
+          [35.3, 5.4],
+          [34.2, 6.0],
+          [33.0, 7.8],
+          [33.2, 8.4],
+          [34.1, 9.5],
+          [35.0, 10.0],
+          [36.0, 11.0],
+          [36.5, 12.5],
+          [36.2, 13.5],
+        ];
+        const K = 13,
+          ADD = [38.74, 9.03];
+        const geo = (lon, lat) =>
+          pr((lon - ADD[0]) * K, 0, -(lat - ADD[1]) * K);
+        const AFp = AFRICA.map((p) => geo(p[0], p[1])),
+          MDp = MADA.map((p) => geo(p[0], p[1])),
+          ETp = ETH.map((p) => geo(p[0], p[1]));
+
+        function drawGround(t) {
+          hatch(AFp, -0.65, 18, { a: 0.3 });
+          ink(AFp, { closed: true, w: 1.1, amp: 1.2, a: 0.9 });
+          ink(MDp, { closed: true, w: 1, amp: 0.8, a: 0.8 });
+          /* Ethiopia: paper fill to knock out the hatch, then cross-hatch */
+          ink(ETp, { closed: true, fill: P.paper, nostroke: true, amp: 1 });
+          hatch(ETp, 0.75, 8, { a: 0.9, w: 0.7 });
+          hatch(ETp, -0.75, 8, { a: 0.6, w: 0.7 });
+          ink(
+            ETp.map((p) => [p[0] + 2.5, p[1] + 2.5]),
+            { closed: true, w: 0.9, a: 0.4, single: true, amp: 0.8 },
+          );
+          ink(ETp, { closed: true, w: 1.7, amp: 1.1 });
+          /* ripples spreading from Addis Ababa */
+          for (let i = 0; i < 3; i++) {
+            const q = (t / 2.6 + i / 3) % 1;
+            ink(ground(0, 0, 8 + q * 64, 8 + q * 64), {
+              closed: true,
+              w: 1,
+              a: Math.pow(1 - q, 2) * 0.85,
+              single: true,
+              amp: 0.6,
+            });
+          }
+          ink(ground(0, 0, 4, 4, 10), {
+            closed: true,
+            fill: P.ink,
+            w: 0.6,
+            amp: 0.2,
+            single: true,
+          });
+          /* shadow under the desk set */
+          hatch(ground(12, 8, 66, 62), 0.5, 8, { a: 0.35, w: 0.6 });
+          /* labels */
+          text("ETHIOPIA", 34, 54, 30, P.ink, { rot: -0.05, halo: 5 });
+          text("Addis Ababa", -66, 24, 15, P.ink, { weight: 600, halo: 4 });
+          ink(
+            [
+              [-44, 22],
+              [-30, 17],
+              [-17, 9],
+            ],
+            { single: true, w: 0.8, amp: 0.3 },
+          );
+          ink(
+            [
+              [-23, 8],
+              [-16, 9],
+              [-19, 15],
+            ],
+            { single: true, w: 0.8, amp: 0.2 },
+          );
+          /* zoom bubble: all of Africa */
+          const bx = 112,
+            by = 88,
+            br = 32,
+            ks = 0.78;
+          const mp = (p) => [bx + (p[0] - 17) * ks, by - (p[1] - 1) * ks];
+          ink(circ(bx, by, br, 22), {
+            closed: true,
+            fill: P.paper,
+            w: 1.1,
+            amp: 0.5,
+          });
+          ink(AFRICA.map(mp), { closed: true, w: 0.8, amp: 0.3, single: true });
+          ink(ETH.map(mp), {
+            closed: true,
+            fill: P.ink,
+            w: 0.5,
+            amp: 0.2,
+            single: true,
+          });
+          text("AFRICA", bx, by + br + 10, 13, P.ink, { weight: 600, halo: 3 });
+        }
+
+        /* ---------- 3D helpers (flat-shaded, drawn in ink) ---------- */
+        const LIGHT = [-0.45, 0.8, 0.4];
+        const FACES = [
+          {
+            n: [0, 1, 0],
+            q: [
+              [-1, 1, -1],
+              [1, 1, -1],
+              [1, 1, 1],
+              [-1, 1, 1],
+            ],
+          },
+          {
+            n: [0, 0, 1],
+            q: [
+              [-1, -1, 1],
+              [1, -1, 1],
+              [1, 1, 1],
+              [-1, 1, 1],
+            ],
+          },
+          {
+            n: [0, 0, -1],
+            q: [
+              [1, -1, -1],
+              [-1, -1, -1],
+              [-1, 1, -1],
+              [1, 1, -1],
+            ],
+          },
+          {
+            n: [1, 0, 0],
+            q: [
+              [1, -1, 1],
+              [1, -1, -1],
+              [1, 1, -1],
+              [1, 1, 1],
+            ],
+          },
+          {
+            n: [-1, 0, 0],
+            q: [
+              [-1, -1, -1],
+              [-1, -1, 1],
+              [-1, 1, 1],
+              [-1, 1, -1],
+            ],
+          },
+        ];
+        function box(items, c, s, yaw, fill, w) {
+          const hx = s[0] / 2,
+            hy = s[1] / 2,
+            hz = s[2] / 2;
+          items.push({
+            d: dp(rotY(c, yaw)),
+            f() {
+              FACES.forEach((F) => {
+                const nW = rotY(F.n, yaw);
+                if (nW[1] * sE + nW[2] * cE <= 0.02) return;
+                const q = F.q.map((k) =>
+                  PJ(
+                    rotY(
+                      [c[0] + k[0] * hx, c[1] + k[1] * hy, c[2] + k[2] * hz],
+                      yaw,
+                    ),
+                  ),
+                );
+                ink(q, { closed: true, fill: fill, w: w || 0.9, amp: 0.45 });
+                const sh =
+                  nW[0] * LIGHT[0] + nW[1] * LIGHT[1] + nW[2] * LIGHT[2];
+                if (sh < 0.3) hatch(q, 0.9, 8, { a: 0.4, w: 0.5 });
+              });
+            },
+          });
+        }
+        function capPoly(a, b, r0, r1) {
+          const ang = Math.atan2(b[1] - a[1], b[0] - a[0]),
+            pts = [],
+            N = 6;
+          for (let i = 0; i <= N; i++) {
+            const t = ang - Math.PI / 2 + (Math.PI * i) / N;
+            pts.push([b[0] + Math.cos(t) * r1, b[1] + Math.sin(t) * r1]);
+          }
+          for (let i = 0; i <= N; i++) {
+            const t = ang + Math.PI / 2 + (Math.PI * i) / N;
+            pts.push([a[0] + Math.cos(t) * r0, a[1] + Math.sin(t) * r0]);
+          }
+          return pts;
+        }
+        function cap(items, A, B, r0, r1, fill, bias) {
+          items.push({
+            d:
+              dp([(A[0] + B[0]) / 2, (A[1] + B[1]) / 2, (A[2] + B[2]) / 2]) +
+              (bias || 0),
+            f() {
+              ink(capPoly(PJ(A), PJ(B), r0, r1), {
+                closed: true,
+                fill: fill,
+                w: 0.9,
+                amp: 0.4,
+              });
+            },
+          });
+        }
+        function ik(Sh, T, l1, l2, hint) {
+          let d0 = [T[0] - Sh[0], T[1] - Sh[1], T[2] - Sh[2]];
+          let d = Math.hypot(d0[0], d0[1], d0[2]) || 1;
+          const dir = [d0[0] / d, d0[1] / d, d0[2] / d];
+          const maxd = l1 + l2 - 0.5;
+          if (d > maxd) {
+            d = maxd;
+            T = [Sh[0] + dir[0] * d, Sh[1] + dir[1] * d, Sh[2] + dir[2] * d];
+          }
+          const a = (l1 * l1 - l2 * l2 + d * d) / (2 * d),
+            h = Math.sqrt(Math.max(0, l1 * l1 - a * a));
+          const dot = hint[0] * dir[0] + hint[1] * dir[1] + hint[2] * dir[2];
+          let pv = [
+            hint[0] - dir[0] * dot,
+            hint[1] - dir[1] * dot,
+            hint[2] - dir[2] * dot,
+          ];
+          const pl = Math.hypot(pv[0], pv[1], pv[2]) || 1;
+          pv = [pv[0] / pl, pv[1] / pl, pv[2] / pl];
+          return {
+            E: [
+              Sh[0] + dir[0] * a + pv[0] * h,
+              Sh[1] + dir[1] * a + pv[1] * h,
+              Sh[2] + dir[2] * a + pv[2] * h,
+            ],
+            W: T,
+          };
+        }
+
+        /* code lines on the monitor */
+        let seed = 11;
+        const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+        const CODE = [];
+        for (let i = 0; i < 24; i++) {
+          const segs = [],
+            n = 1 + Math.floor(rnd() * 3);
+          for (let j = 0; j < n; j++) segs.push(4 + Math.floor(rnd() * 13));
+          CODE.push({ ind: Math.floor(rnd() * 4) * 4, segs: segs });
+        }
+
+        /* ---------- timeline: a 14 second loop, animated on ones at 12 fps ---------- */
+        const TS = 2.25; /* desk yaw, and Gugo's yaw while typing */
+        function theta(x) {
+          const sw = (v) => Math.sin((v - 5.9) * 1.4) * 0.05;
+          if (x < 3.6) return TS;
+          if (x < 4.05) return TS + 0.14 * eo(3.6, 4.05, x); /* wind-up */
+          if (x < 5.3)
+            return lerp(TS + 0.14, -0.16, sm(4.05, 5.3, x)); /* swing round */
+          if (x < 5.9) return lerp(-0.16, 0, eo(5.3, 5.9, x)); /* settle */
+          if (x < 9.3) return sw(x);
+          if (x < 9.65) return lerp(sw(9.3), -0.1, eo(9.3, 9.65, x));
+          if (x < 10.9) return lerp(-0.1, TS + 0.12, sm(9.65, 10.9, x));
+          if (x < 11.4) return lerp(TS + 0.12, TS, eo(10.9, 11.4, x));
+          return TS;
+        }
+
+        function buildSet(items, x, t, out) {
+          const th = theta(x),
+            thh =
+              theta(x + 0.2) + gx * 0.2 * (sm(4.2, 5.2, x) - sm(9.7, 10.7, x));
+          const face = sm(4.2, 5.2, x) - sm(9.7, 10.7, x),
+            typing = 1 - face;
+          const smile = clamp01(sm(4.9, 5.5, x) - sm(9.3, 9.9, x));
+          const wave = sm(5.9, 6.4, x) - sm(8.6, 9.1, x);
+          const L2W = (v) => rotY(v, th),
+            SR = (v) => rotY(v, TS);
+
+          /* desk */
+          box(items, [0, 70.5, 84], [150, 3, 80], TS, P.wood);
+          [
+            [-70, 50],
+            [70, 50],
+            [-70, 118],
+            [70, 118],
+          ].forEach((l) =>
+            box(items, [l[0], 34.5, l[1]], [5, 69, 5], TS, P.body, 0.8),
+          );
+          /* monitor, stand, keyboard */
+          box(items, [0, 101, 98], [62, 38, 3.5], TS, P.body);
+          box(items, [0, 77, 100], [6, 10, 3], TS, P.body, 0.8);
+          box(items, [0, 72.6, 100], [26, 1.6, 16], TS, P.body, 0.8);
+          box(items, [0, 73.8, 58], [44, 1.6, 15], TS, P.key, 0.8);
+          items.push({
+            d: dp(SR([0, 101, 98])) + 0.6,
+            f() {
+              const nW = SR([0, 0, -1]);
+              if (nW[1] * sE + nW[2] * cE <= 0.02) return;
+              const hxs = 28.5,
+                hys = 16.5,
+                z = 96.1;
+              ink(
+                [
+                  [-hxs, 101 - hys, z],
+                  [hxs, 101 - hys, z],
+                  [hxs, 101 + hys, z],
+                  [-hxs, 101 + hys, z],
+                ].map((v) => PJ(SR(v))),
+                { closed: true, fill: P.screen, w: 0.8, amp: 0.35 },
+              );
+              const off = Math.floor(t * 2.2);
+              for (let r = 0; r < 9; r++) {
+                const ln = CODE[(r + off) % CODE.length],
+                  yy = 101 + hys - 4 - r * 3.5;
+                let xx = -hxs + 4 + ln.ind;
+                ln.segs.forEach((wd) => {
+                  const x1 = Math.min(hxs - 3, xx + wd);
+                  if (xx < x1)
+                    ink([PJ(SR([xx, yy, z])), PJ(SR([x1, yy, z]))], {
+                      single: true,
+                      amp: 0.12,
+                      w: 0.9,
+                      color: P.code,
+                      a: 0.85,
+                    });
+                  xx = x1 + 2.5;
+                });
+              }
+            },
+          });
+
+          /* chair: swivels with Gugo */
+          box(items, [0, 45, 0], [42, 5, 42], th, P.chair);
+          box(items, [0, 81, -23], [36, 44, 4], th, P.chair);
+          items.push({
+            d: dp(L2W([0, 6, 0])),
+            f() {
+              const col = [PJ(L2W([0, 10, 0])), PJ(L2W([0, 43, 0]))];
+              ink(capPoly(col[0], col[1], 2.6, 2.6), {
+                closed: true,
+                fill: P.chair,
+                w: 0.8,
+                amp: 0.3,
+              });
+              for (let i = 0; i < 5; i++) {
+                const a = (i / 5) * TAU,
+                  e = L2W([Math.sin(a) * 24, 3, Math.cos(a) * 24]);
+                ink(capPoly(col[0], PJ(e), 2.3, 2), {
+                  closed: true,
+                  fill: P.chair,
+                  w: 0.8,
+                  amp: 0.3,
+                });
+                ink(circ(PJ(e)[0], PJ(e)[1] + 1, 2.6, 8), {
+                  closed: true,
+                  fill: P.ink,
+                  w: 0.5,
+                  amp: 0.1,
+                  single: true,
+                });
+              }
+            },
+          });
+
+          /* legs */
+          [-1, 1].forEach((s) => {
+            const hip = L2W([s * 11, 50, 0]),
+              knee = L2W([s * 12, 54, 36]),
+              ank = L2W([s * 12, 7, 40]),
+              toe = L2W([s * 12, 4, 55]);
+            cap(items, hip, knee, 8, 7, P.pants);
+            cap(items, knee, ank, 6.6, 5, P.pants);
+            cap(items, ank, toe, 5.2, 5.2, P.shoe);
+          });
+
+          /* torso and neck */
+          const lvl = (y, a, b) => {
+            let mn = 1e9,
+              mx = -1e9;
+            for (let k = 0; k < 12; k++) {
+              const q = (k / 12) * TAU,
+                v = rotY([Math.cos(q) * a, y, Math.sin(q) * b], th);
+              mn = Math.min(mn, v[0]);
+              mx = Math.max(mx, v[0]);
+            }
+            const c = PJ(L2W([0, y, 0]));
+            return { l: mn, r: mx, y: c[1], cx: c[0] };
+          };
+          const br = Math.sin(t * 1.7) * 0.8,
+            sq = 1 + 0.03 * Math.exp(-Math.pow((x - 5.7) * 2.2, 2));
+          const sh = lvl(97, 21, 10),
+            ch = lvl(80, 19, 11),
+            wa = lvl(52, 15, 10);
+          sh.y -= br + (sq - 1) * 40;
+          const torso = [
+            [sh.l, sh.y],
+            [sh.cx, sh.y - 3.5],
+            [sh.r, sh.y],
+            [ch.r + 1, ch.y],
+            [wa.r, wa.y],
+            [wa.cx, wa.y + 4],
+            [wa.l, wa.y],
+            [ch.l - 1, ch.y],
+          ];
+          const td = dp(L2W([0, 75, 0]));
+          cap(
+            items,
+            L2W([0, 98, 0]),
+            L2W([0, 110, 2]),
+            5.5,
+            5,
+            P.skin,
+            td - 0.3 - dp(L2W([0, 104, 1])),
+          );
+          items.push({
+            d: td,
+            f() {
+              ink(torso, { closed: true, fill: P.shirt, w: 1, amp: 0.6 });
+              const lp = (a, b, k) => lerp(a, b, k);
+              hatch(
+                [
+                  [lp(sh.l, sh.r, 0.72), sh.y - 3],
+                  [sh.r, sh.y],
+                  [ch.r + 1, ch.y],
+                  [wa.r, wa.y],
+                  [lp(wa.l, wa.r, 0.72), wa.y + 4],
+                ],
+                -0.9,
+                8,
+                { a: 0.35, w: 0.5, color: isDark ? "#0a0a0a" : P.ink },
+              );
+              if (face > 0.4) {
+                ink(
+                  [
+                    PJ(L2W([-7, 99, 9])),
+                    PJ(L2W([0, 90, 10.5])),
+                    PJ(L2W([7, 99, 9])),
+                  ],
+                  { single: true, w: 0.9, amp: 0.3 },
+                );
+                ink([PJ(L2W([-3, 80, 11])), PJ(L2W([-4, 62, 11]))], {
+                  single: true,
+                  w: 0.6,
+                  amp: 0.4,
+                  a: 0.5,
+                });
+              }
+            },
+          });
+
+          /* arms */
+          [-1, 1].forEach((s) => {
+            const Sh = L2W([s * 21, 94, 0]);
+            const kb = Math.sin(t * 16 + (s > 0 ? 0 : 2)) * 1.6;
+            const typeT = [s * 9, 77 + Math.max(0, kb), 47],
+              restT = [s * 13, 63, 26];
+            let loc = [0, 1, 2].map((i) => lerp(restT[i], typeT[i], typing));
+            if (s > 0) {
+              const waveT = [
+                24 + Math.sin(t * 9.5) * 7,
+                128 + Math.cos(t * 9.5) * 2,
+                20,
+              ];
+              loc = [0, 1, 2].map((i) => lerp(loc[i], waveT[i], wave));
+            }
+            const r = ik(Sh, L2W(loc), 29, 27, L2W([s * 0.7, -1, -0.4]));
+            cap(items, Sh, r.E, 5.8, 5.2, P.shirt, 0.2);
+            cap(items, r.E, r.W, 4.8, 4.1, P.skin, 0.2);
+            const hand = [
+              r.W[0] + (r.W[0] - r.E[0]) * 0.15,
+              r.W[1] + (r.W[1] - r.E[1]) * 0.15,
+              r.W[2] + (r.W[2] - r.E[2]) * 0.15,
+            ];
+            items.push({
+              d: dp(hand) + 0.3,
+              f() {
+                const hs = PJ(hand);
+                if (s > 0 && wave > 0.4) {
+                  for (let k = -2; k <= 1; k++) {
+                    const a =
+                      -Math.PI / 2 +
+                      (k + 0.5) * 0.34 +
+                      Math.sin(t * 9.5) * 0.12;
+                    ink(
+                      capPoly(
+                        [hs[0], hs[1]],
+                        [hs[0] + Math.cos(a) * 7.5, hs[1] + Math.sin(a) * 7.5],
+                        1.8,
+                        1.4,
+                      ),
+                      {
+                        closed: true,
+                        fill: P.skin,
+                        w: 0.6,
+                        amp: 0.1,
+                        single: true,
+                      },
+                    );
+                  }
+                }
+                ink(circ(hs[0], hs[1], 5, 12), {
+                  closed: true,
+                  fill: P.skin,
+                  w: 0.9,
+                  amp: 0.25,
+                });
+              },
+            });
+          });
+
+          out.th = th;
+          out.thh = thh;
+          out.face = face;
+          out.typing = typing;
+          out.smile = smile;
+          out.wave = wave;
+          out.td = td;
+        }
+
+        /* ---------- head, face and hair ---------- */
+        function pushHead(items, x, t, st) {
+          const hcW = rotY([0, 122, 3], st.th),
+            hcs = PJ(hcW),
+            R = 15;
+          const hp =
+            0.16 * st.typing +
+            0.03 * Math.sin(t * 2) * st.face +
+            0.1 * Math.exp(-Math.pow((x - 5.6) * 3, 2));
+          const cp = Math.cos(hp),
+            sp = Math.sin(hp),
+            thh = st.thh,
+            smile = st.smile;
+          const hp3 = (az, el, r) => {
+            const ce = Math.cos(el);
+            let v = [
+              Math.sin(az) * ce * r,
+              Math.sin(el) * r,
+              Math.cos(az) * ce * r,
+            ];
+            v = [v[0], v[1] * cp - v[2] * sp, v[1] * sp + v[2] * cp];
+            return rotY(v, thh);
+          };
+          const vis = (v) => (v[1] * sE + v[2] * cE) / R;
+          const scr = (v) => [hcs[0] + v[0], hcs[1] + (-v[1] * cE + v[2] * sE)];
+          const blink = t % 3.7 < 0.17 ? 0.12 : 1;
+          items.push({
+            d: dp(hcW) + 6,
+            f() {
+              const ears = (side) =>
+                [-1, 1].forEach((s) => {
+                  const v = hp3(s * 1.5, -0.02, R),
+                    vv = vis(v);
+                  if (vv > 0.45 === side)
+                    ink(ellp(scr(v)[0], scr(v)[1], 3.2, 4.4, 10), {
+                      closed: true,
+                      fill: P.skin,
+                      w: 0.8,
+                      amp: 0.15,
+                      single: true,
+                    });
+                });
+              ears(false);
+              ink(circ(hcs[0], hcs[1], R, 26), {
+                closed: true,
+                fill: P.skin,
+                w: 1.1,
+                amp: 0.5,
+              });
+              ears(true);
+
+              /* nose */
+              const tip = hp3(0, -0.1, R * 1.14);
+              if (vis(hp3(0, -0.1, R)) > -0.15)
+                ink([scr(hp3(0, 0.05, R)), scr(tip), scr(hp3(0, -0.2, R))], {
+                  closed: true,
+                  fill: P.skin,
+                  w: 0.8,
+                  amp: 0.12,
+                  single: true,
+                });
+              /* eyes */
+              [-1, 1].forEach((s) => {
+                const v = hp3(s * 0.36, 0.06, R),
+                  vv = vis(v);
+                if (vv > 0.12) {
+                  const c = scr(v),
+                    rx = 2.9 * Math.max(0.3, vv),
+                    ry = 3.3 * (1 - 0.4 * smile) * blink;
+                  ink(ellp(c[0], c[1], rx, Math.max(0.5, ry), 10), {
+                    closed: true,
+                    fill: "#ffffff",
+                    color: "#0b0b0b",
+                    w: 0.6,
+                    amp: 0.1,
+                    single: true,
+                  });
+                  if (blink > 0.5)
+                    ink(
+                      circ(
+                        c[0] + gx * 1.1 * vv,
+                        c[1] + gy * 0.8,
+                        1.7 * Math.max(0.45, vv),
+                        8,
+                      ),
+                      {
+                        closed: true,
+                        fill: "#000000",
+                        color: "#000000",
+                        w: 0.3,
+                        amp: 0.05,
+                        single: true,
+                      },
+                    );
+                }
+                const a = hp3(s * 0.62, 0.3 + smile * 0.03, R),
+                  b = hp3(s * 0.18, 0.31 + smile * 0.05, R);
+                if (vis(a) > 0.1 && vis(b) > 0.1)
+                  ink([scr(a), scr(b)], {
+                    single: true,
+                    w: 1.1,
+                    amp: 0.12,
+                    color: P.hi,
+                  });
+              });
+              /* mouth */
+              const elc = -0.36,
+                aw = 0.24 + 0.1 * smile,
+                N = 6,
+                top = [],
+                bot = [];
+              for (let u = 0; u <= N; u++) {
+                const az = lerp(-aw, aw, u / N),
+                  el =
+                    elc +
+                    0.08 * smile * Math.pow(Math.abs((2 * u) / N - 1), 1.5);
+                top.push(scr(hp3(az, el, R)));
+                bot.push(
+                  scr(
+                    hp3(
+                      az,
+                      el - 0.2 * smile * Math.sin((Math.PI * u) / N) - 0.012,
+                      R,
+                    ),
+                  ),
+                );
+              }
+              if (vis(hp3(0, elc, R)) > 0.1) {
+                if (smile > 0.12)
+                  ink(top.concat(bot.reverse()), {
+                    closed: true,
+                    fill: "#f7f7f7",
+                    color: "#0b0b0b",
+                    w: 0.7,
+                    amp: 0.1,
+                    single: true,
+                  });
+                else ink(top, { single: true, w: 1, amp: 0.1, color: P.hi });
+                if (smile > 0.3)
+                  [-1, 1].forEach((s) =>
+                    ink(
+                      [
+                        scr(hp3(s * (aw + 0.07), elc + 0.1 * smile, R)),
+                        scr(hp3(s * (aw + 0.14), elc + 0.17 * smile, R)),
+                      ],
+                      { single: true, w: 0.8, amp: 0.08, color: P.hi, a: 0.7 },
+                    ),
+                  );
+              }
+              /* hair: a cap above a hairline that dips toward the back */
+              const Rh = R * 1.1,
+                cap2 = [],
+                line = [];
+              for (let i = 0; i <= 12; i++) {
+                const a = Math.PI + (Math.PI * i) / 12;
+                cap2.push([
+                  hcs[0] + Math.cos(a) * Rh,
+                  hcs[1] + Math.sin(a) * Rh,
+                ]);
+              }
+              for (let k = 0; k < 24; k++) {
+                const az = (k / 24) * TAU,
+                  v = hp3(az, 0.42 - 0.235 * (1 - Math.cos(az)), R * 1.06);
+                if (vis(v) > -0.02) line.push(scr(v));
+              }
+              line.sort((a, b) => b[0] - a[0]);
+              ink(cap2.concat(line), {
+                closed: true,
+                fill: P.hair,
+                w: 1.1,
+                amp: 0.5,
+              });
+              const hl = [];
+              for (let i = 0; i <= 6; i++) {
+                const a = Math.PI * 1.15 + (Math.PI * 0.4 * i) / 6;
+                hl.push([
+                  hcs[0] + Math.cos(a) * Rh * 0.78,
+                  hcs[1] + Math.sin(a) * Rh * 0.78,
+                ]);
+              }
+              ink(hl, { single: true, w: 0.8, amp: 0.15, color: P.hi, a: 0.6 });
+            },
+          });
+          st.head = [hcs[0], hcs[1]];
+        }
+
+        /* ---------- speech bubble and doodles ---------- */
+        const DOODLES = [
+          { s: "</>", x: -88, y: -122, p: 0 },
+          { s: "{ }", x: -112, y: -78, p: 2.3 },
+          { s: "AI", x: -70, y: -168, p: 4.6 },
+        ];
+        function overlay(x, t, st) {
+          const bs = clamp01(backOut(5.95, 6.4, x)) * (1 - sm(8.6, 9.0, x));
+          if (bs > 0.02 && st.head) {
+            ctx.save();
+            ctx.translate(st.head[0] - 6, st.head[1] - 24);
+            ctx.scale(bs, bs);
+            ink(
+              [
+                [0, 0],
+                [10, -22],
+                [30, -20],
+              ],
+              { closed: true, fill: P.paper, w: 1, amp: 0.25 },
+            );
+            ink(ellp(34, -38, 54, 20, 20), {
+              closed: true,
+              fill: P.paper,
+              w: 1.1,
+              amp: 0.5,
+            });
+            text("Hi, I'm Aser!!!", 34, -37, 15, P.ink);
+            ctx.restore();
+          }
+          DOODLES.forEach((d) => {
+            const q = ((t + d.p) % 7) / 7,
+              sc = clamp01(backOut(0, 0.12, q)) * (1 - sm(0.82, 1, q));
+            if (sc < 0.03) return;
+            ctx.save();
+            ctx.translate(d.x, d.y - q * 10);
+            text(d.s, 0, 0, 26, P.ink, {
+              scale: sc,
+              rot: Math.sin(t * 2 + d.p) * 0.08,
+              halo: 4,
+              a: 0.9,
+            });
+            if (q < 0.2)
+              for (let k = 0; k < 4; k++) {
+                const a = k * 1.57 + 0.6,
+                  r0 = 15 * sc,
+                  r1 = (15 + 7 * (1 - q * 5)) * sc;
+                ink(
+                  [
+                    [Math.cos(a) * r0, Math.sin(a) * r0],
+                    [Math.cos(a) * r1, Math.sin(a) * r1],
+                  ],
+                  { single: true, w: 0.8, amp: 0.15 },
+                );
+              }
+            ctx.restore();
+          });
+        }
+
+        /* ---------- draw, size, loop ---------- */
+        let isDark = false,
+          lastF = -1;
+        function draw(t) {
+          const x = t % 14;
+          boil = Math.floor(t * 6) % 3;
+          sid = 0;
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.setTransform(DPR * S, 0, 0, DPR * S, DPR * OX, DPR * OY);
+          drawGround(t);
+          const items = [],
+            st = {};
+          buildSet(items, x, t, st);
+          pushHead(items, x, t, st);
+          items.sort((a, b) => a.d - b.d);
+          items.forEach((it) => it.f());
+          overlay(x, t, st);
+        }
+        function paint() {
+          draw(reduce ? 7.4 : lastF >= 0 ? lastF / 12 : 0);
+        }
+        function resize() {
+          W = window.innerWidth;
+          H = window.innerHeight;
+          DPR = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.round(W * DPR);
+          canvas.height = Math.round(H * DPR);
+          const wide = W / H > 1.05 && W > 820;
+          const Rpx = wide
+            ? Math.min(H * 0.62, W * 0.3)
+            : Math.min(W * 0.62, H * 0.4);
+          S = Rpx / 230;
+          OX = wide ? W - Rpx * 0.95 : W / 2;
+          const cy = wide ? H * 0.53 : H * 0.5;
+          OY = cy + 17 * S;
+          canvas.style.opacity = wide ? "1" : "0.55";
+          const mask =
+            "radial-gradient(circle " +
+            Rpx +
+            "px at " +
+            OX +
+            "px " +
+            cy +
+            "px, #000 58%, transparent 100%)";
+          canvas.style.webkitMaskImage = mask;
+          canvas.style.maskImage = mask;
+          paint();
+        }
+        applyColors = function () {
+          isDark = getComputedStyle(root).colorScheme.indexOf("dark") !== -1;
+          P = isDark ? THEMES.dark : THEMES.light;
+          paint();
+        };
+        window.addEventListener("resize", resize);
+        window.addEventListener("pointermove", (e) => {
+          gx = Math.max(-1, Math.min(1, (e.clientX - OX) / (W * 0.5)));
+          gy = Math.max(-1, Math.min(1, (e.clientY - H * 0.5) / (H * 0.5)));
+        });
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", applyColors);
+        function frame(now) {
+          requestAnimationFrame(frame);
+          const f = Math.floor((now / 1000) * 12);
+          if (f === lastF) return;
+          lastF = f;
+          draw((f / 12) * 1.5);
+        }
+        applyColors();
+        resize();
+        if (!reduce) requestAnimationFrame(frame);
+      })();
+    </script>
+  </body>
+</html>
